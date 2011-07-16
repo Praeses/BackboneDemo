@@ -46,7 +46,7 @@ namespace BackboneDemo.Controllers
         private string Save(int? id, ViewModel viewmodel) 
         {
             dynamic model = viewmodel;
-            if (id.HasValue == false && DataBase.Count > 0) { id = DataBase.Keys.Max(); }
+            if (id.HasValue == false && DataBase.Count > 0) { id = DataBase.Count + 1; }
             if (id.HasValue == false ) { id = 1; }
             model.id = id.Value;
             DataBase[id.Value] = model;

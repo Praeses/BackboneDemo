@@ -14,18 +14,28 @@ $(function () {
         initialize: function () {
             this.model = new Tickets();
             this.model.view = this;
+            _.bindAll(this, "DataReady");
             this.render();
-        },
-
-        AddTicket: function () {
-            var ticket = new Ticket();
-            this.model.add(ticket);
-            this.$('ul').append(new TicketView({ model: ticket }).el);
         },
 
         events: { "click #NewTicket": "AddTicket" },
 
+        AddTicket: function () {
+            var ticket = new Ticket();
+            this.model.add(ticket);
+            this.DisplayTicket(ticket);
+        },
+
+        DisplayTicket: function (ticket) {
+            this.$('ul').append(new TicketView({ model: ticket }).el);
+        },
+
+        DataReady: function (collection) {
+            _.each(collection.models, this.DisplayTicket);
+        },
+
         render: function () {
+            this.model.fetch({ success: this.DataReady });
         }
 
     });
@@ -36,12 +46,14 @@ $(function () {
 
         initialize: function () {
             this.model.view = this;
+            _.bindAll(this, "AddField");
             this.render();
         },
 
         events: {
-            "keydown #NewField": "NewField",
-            "keydown input:not(#NewField)": "inputChanged"
+            "keyup #NewField": "NewField",
+            "keyup input:not(#NewField)": "inputChanged",
+            "blur input": "valueChanged"
         },
 
         NewField: function (e) {
@@ -53,17 +65,26 @@ $(function () {
             }
         },
 
-        inputChangedCallback: function () { this.model.save( this.model.toJSON() ); },
+        valueChanged: function () { this.model.save(this.model.toJSON()); },
 
         AddField: function (text) {
             this.$('fieldset').append(this.newFieldTemplate({ id: text }));
+            this.bindField(this.$("#" + text)[0], this);
         },
 
         template: Handlebars.compile($("#ticket-template").html()),
         newFieldTemplate: Handlebars.compile($("#new-field-template").html()),
 
+        createFieldsFromModel: function () {
+            var keys = _.map(JSON.stringify(this.model.toJSON()).match(/"[^"]*":/g)
+                , function (raw) { return raw.match(/"(.+)":/)[1] });
+            var keys = _.without(keys, "id");
+            _.each(keys, this.AddField);
+        },
+
         render: function () {
             $(this.el).html(this.template(this.model));
+            this.createFieldsFromModel();
             window.temp = this.model;
         }
 
