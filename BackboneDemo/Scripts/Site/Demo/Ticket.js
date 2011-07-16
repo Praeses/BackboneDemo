@@ -59,7 +59,7 @@ $(function () {
         NewField: function (e) {
             if (e && e.keyCode == 13) {
                 var text = $(e.target).val();
-                if ($("#" + text).length == 0) {
+                if (this.$("#" + text).length == 0) {
                     this.AddField(text);
                 }
             }
