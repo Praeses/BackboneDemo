@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
+using BackboneDemo.Models;
 
 namespace BackboneDemo
 {
@@ -35,6 +36,7 @@ namespace BackboneDemo
 
             RegisterGlobalFilters(GlobalFilters.Filters);
             RegisterRoutes(RouteTable.Routes);
+            ModelBinders.Binders.Add(typeof(ViewModel), new DynamicModelBinder());
         }
     }
 }

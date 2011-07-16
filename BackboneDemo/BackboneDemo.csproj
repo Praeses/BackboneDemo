@@ -69,6 +69,8 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\DynamicModelBinder.cs" />
+    <Compile Include="Models\ViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Views\Shared\MasterPage.Master.cs">
       <DependentUpon>MasterPage.Master</DependentUpon>
@@ -96,6 +98,11 @@
     <Content Include="Content\themes\base\images\ui-icons_454545_256x240.png" />
     <Content Include="Content\themes\base\images\ui-icons_888888_256x240.png" />
     <Content Include="Content\themes\base\images\ui-icons_cd0a0a_256x240.png" />
+    <Content Include="Scripts\Backbone\backbone-min.js" />
+    <Content Include="Scripts\Backbone\backbone_base_view.js" />
+    <Content Include="Scripts\Backbone\handlebars.1.0.0.beta.3.js" />
+    <Content Include="Scripts\Backbone\underscore-min.js" />
+    <Content Include="Scripts\Site\Demo\Ticket.js" />
     <Content Include="Views\Demo\Index.aspx" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
@@ -107,10 +114,7 @@
     <Content Include="Views\Web.config" />
     <Content Include="Views\Shared\Error.aspx" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Models\" />
-    <Folder Include="Scripts\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Content Include="Views\Shared\MasterPage.Master" />
   </ItemGroup>
