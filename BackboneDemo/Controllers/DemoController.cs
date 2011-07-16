@@ -50,7 +50,7 @@ namespace BackboneDemo.Controllers
             if (id.HasValue == false ) { id = 1; }
             model.id = id.Value;
             DataBase[id.Value] = model;
-            return model.ToJson();
+            return (new { id = id.Value }).ToJson();
         }
 
 

@@ -53,7 +53,7 @@ $(function () {
         events: {
             "keyup #NewField": "NewField",
             "keyup input:not(#NewField)": "inputChanged",
-            "blur input": "valueChanged"
+            "keyup input": "SaveChanges"
         },
 
         NewField: function (e) {
@@ -65,7 +65,7 @@ $(function () {
             }
         },
 
-        valueChanged: function () { this.model.save(this.model.toJSON()); },
+        SaveChanges: function () { this.model.save(); },
 
         AddField: function (text) {
             this.$('fieldset').append(this.newFieldTemplate({ id: text }));
@@ -82,14 +82,13 @@ $(function () {
             _.each(keys, this.AddField);
         },
 
-        refresh:function(){
-            if( $('input:focus').length == 0) {this.model.fetch(); }
+        refresh: function () {
+            if (this.$('*:focus').length == 0) { this.model.fetch(); }
         },
 
         render: function () {
             $(this.el).html(this.template(this.model));
             this.createFieldsFromModel();
-            var model = this.model;
             setInterval( this.refresh, 1000);
         }
 
