@@ -46,7 +46,7 @@ $(function () {
 
         initialize: function () {
             this.model.view = this;
-            _.bindAll(this, "AddField");
+            _.bindAll(this, "AddField", "refresh");
             this.render();
         },
 
@@ -82,15 +82,18 @@ $(function () {
             _.each(keys, this.AddField);
         },
 
+        refresh:function(){
+            if( $('input:focus').length == 0) {this.model.fetch(); }
+        },
+
         render: function () {
             $(this.el).html(this.template(this.model));
             this.createFieldsFromModel();
-            window.temp = this.model;
+            var model = this.model;
+            setInterval( this.refresh, 1000);
         }
 
     });
-
-
 
 
     new TicketsView();
