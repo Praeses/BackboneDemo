@@ -53,7 +53,7 @@ $(function () {
             }
         },
 
-        inputChangedCallback: function () { this.model.save(); },
+        inputChangedCallback: function () { this.model.save( this.model.toJSON() ); },
 
         AddField: function (text) {
             this.$('fieldset').append(this.newFieldTemplate({ id: text }));

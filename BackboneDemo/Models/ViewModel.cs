@@ -29,6 +29,18 @@ namespace BackboneDemo.Models
             _dictionary[key] = value;
             return this;
         }
+
+        public int? GetId() 
+        {
+            if( this.HasMember( "id" ) == false ) {return null;}
+            object id = _dictionary["id"];
+            if (id is int) { return (int)id; } 
+            if (id is string) {
+                int i;
+                if ( int.TryParse((string)id, out i) ) { return i; }
+            }
+            return null;
+        }
         
 
         public bool HasMember(string member) { return _dictionary.ContainsKey(member); }
