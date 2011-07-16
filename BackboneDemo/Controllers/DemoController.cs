@@ -33,7 +33,7 @@ namespace BackboneDemo.Controllers
 
         private string Get(int id) 
         {
-            if (DataBase.ContainsKey(id)) DataBase[id].ToJson();
+            if (DataBase.ContainsKey(id)) { return DataBase[id].ToJson(); } 
             return null;
         }
 
