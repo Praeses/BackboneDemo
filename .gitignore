@@ -1,0 +1,21 @@
+#VS Files
+*.swp
+*.user
+*.suo
+*.*~
+*.rar
+.DS_Store
+
+#Folders
+obj
+bin
+Logs
+src/web/App_Data
+builds
+src/Phillips.DealManagementSystem.Views/App_Data
+
+#config files
+src/web/Config/AppSettingsServerDependent.config
+src/web/Config/ConnectionStrings.config
+src/Phillips.DealManagementSystem.Views/Config/AppSettingsServerDependent.config
+src/Phillips.DealManagementSystem.Views/Config/ConnectionStrings.config
