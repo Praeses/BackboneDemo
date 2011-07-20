@@ -12,45 +12,35 @@ namespace BackboneDemo.Controllers
         private static Dictionary<int, ViewModel> DataBase = new Dictionary<int, ViewModel>();
 
 
-
         public ActionResult Index() { return View(); }
 
-        public string Ticket(ViewModel viewmodel)
+        [HttpGet]
+        [NoCache]
+        public string Ticket(ViewModel viewmodel) 
         {
             dynamic model = viewmodel;
             int? id = model.GetId();
-            switch (this.Request.RequestType)
-            {
-                case "GET":
-                    return id.HasValue ? Get(id.Value) : GetAll();
-                case "POST": //new
-                case "PUT":  //update
-                    return Save(id, model);
-            }
+            if (id.HasValue == false) { return GetAll(); }
+            if (DataBase.ContainsKey(id.Value)) { return DataBase[id.Value].ToJson(); } 
             return null;
         }
 
 
-        private string Get(int id) 
-        {
-            if (DataBase.ContainsKey(id)) { return DataBase[id].ToJson(); } 
-            return null;
-        }
-
-        private string GetAll() 
-        {
-
-            return '[' + string.Join(", ", DataBase.Values.Select(x => x.ToJson()).ToArray() ) + ']';
-        }
-
-        private string Save(int? id, ViewModel viewmodel) 
+        [AcceptVerbs(HttpVerbs.Put | HttpVerbs.Post)]//Post=New, Put=Update
+        public string Ticket(ViewModel viewmodel, FormCollection data) 
         {
             dynamic model = viewmodel;
+            int? id = model.GetId();
             if (id.HasValue == false && DataBase.Count > 0) { id = DataBase.Count + 1; }
             if (id.HasValue == false ) { id = 1; }
             model.id = id.Value;
             DataBase[id.Value] = model;
             return (new { id = id.Value }).ToJson();
+        }
+
+        private string GetAll() 
+        {
+            return '[' + string.Join(", ", DataBase.Values.Select(x => x.ToJson()).ToArray() ) + ']';
         }
 
 
