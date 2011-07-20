@@ -24,6 +24,7 @@ $(function () {
             var ticket = new Ticket();
             this.model.add(ticket);
             this.DisplayTicket(ticket);
+            window.ticket = ticket;
         },
 
         DisplayTicket: function (ticket) {
@@ -76,9 +77,8 @@ $(function () {
         newFieldTemplate: Handlebars.compile($("#new-field-template").html()),
 
         createFieldsFromModel: function () {
-            var keys = _.map(JSON.stringify(this.model.toJSON()).match(/"[^"]*":/g)
-                , function (raw) { return raw.match(/"(.+)":/)[1] });
-            var keys = _.without(keys, "id");
+            var keys = _.keys(this.model.toJSON());
+            keys = _.without(keys, "id");
             _.each(keys, this.AddField);
         },
 
@@ -89,7 +89,7 @@ $(function () {
         render: function () {
             $(this.el).html(this.template(this.model));
             this.createFieldsFromModel();
-            setInterval( this.refresh, 1000);
+            setInterval(this.refresh, 1000);
         }
 
     });
